@@ -8,14 +8,28 @@ const routes = [
     },
 	{ 
 		path: '/login', 
-        component: () => import( './../views/login.vue'), //主页面
-		name: 'LOgin'
+        component: () => import( './../views/login.vue'), //登陆主页面
+		name: 'Login'
 	},
 	{ 
-		path: '/list', 
-        component: () => import( './../views/list.vue'), //主页面
-		name: 'List'
+		path: '/home', 
+        component: () => import( './../views/home.vue'), //主页面
+		name: 'Home',
+		redirect: '/welcome',
+		children:[
+			{
+				path: '/welcome', 
+				component: () => import( './../views/welcome.vue'), //主页面
+				name: 'Welcome'
+			},
+			{
+				path: '/welcome/demo', 
+				component: () => import( './../components/demo/appDemo.vue'), //主页面
+				name: 'Demo'
+			},
+		]
 	},
+	
 ]
 
 // 配置路由，创建并暴露路由实例

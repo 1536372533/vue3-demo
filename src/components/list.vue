@@ -1,33 +1,38 @@
 <template>
 <div>
-    <h1>你好--{{userInfo.nickname}}</h1>
-    <button @click="outList">退出登录</button>
-    <button @click="list">获取list</button>
-    <button @click="showEchart">Echarts</button>
-    <div v-if="isshowList">
-        <table border="2" cellspacing="0">
-            <tr>
-                <td>index</td>
-                <td>id</td>
-                <td>name</td>
-            </tr>
-    </table>
-        <table border="2" cellspacing="0" v-for="(lists,index) in productData" :key="lists.id">
-            <tr>
-                <td>{{index}}</td>
-                <td>{{lists.id}}</td>
-                <td>{{lists.name}}</td>
-            </tr>
+    <div class="contain">
+        <h1>你好--{{userInfo.nickname}}</h1>
+        <el-button @click="desChart()">销毁Echarts</el-button> 
+        <el-button @click="showEchart(2)">Echarts2</el-button>
+        <el-button @click="showEchart(1)">Echarts1</el-button>      
+    </div>
+    <div class="show">
+        <!-- <div v-if="isshowList">
+            <table border="2" cellspacing="0">
+                <tr>
+                    <td>index</td>
+                    <td>id</td>
+                    <td>name</td>
+                </tr>
         </table>
+            <table border="2" cellspacing="0" v-for="(lists,index) in productData" :key="lists.id">
+                <tr>
+                    <td>{{index}}</td>
+                    <td>{{lists.id}}</td>
+                    <td>{{lists.name}}</td>
+                </tr>
+            </table>
+        </div> -->
+        <div class="echarts-box" >
+            <div id="listEchart" :style="{ width: '600px', height: '220px'}"></div>
+        </div>        
     </div>
-    <div class="echarts-box">
-        <div id="listEchart" :style="{ width: '900px', height: '300px' }"></div>
-    </div>
+
 </div>
 </template>
 
 <script>
-import { getCurrentInstance,onMounted,onUnmounted,ref } from '@vue/runtime-core'
+import { getCurrentInstance,ref } from '@vue/runtime-core'
 import {useRouter} from "vue-router"
 import { useStore } from 'vuex'
 import * as echarts from "echarts";
@@ -35,10 +40,9 @@ import * as echarts from "echarts";
 export default {
     name:"userList",
     setup(){
-        let total = ref(0)//总共多少条数据
-        let productData = ref() //表格数据
-        let a = ref()
-        let queryMap = ref({//查询对象
+        let listData = ref([])
+        //get需要告诉服务器要什么数据，6个
+        let queryMap = ref({
                     pageNum: 1,
                     pageSize: 6,
                     name: "",
@@ -46,10 +50,6 @@ export default {
                     supplier: "",
                     status: 0,
                 }) 
-
-          
-        let isshowList = ref(false)
-
         const router = useRouter()
         const echart = echarts
         const store = useStore()
@@ -57,41 +57,32 @@ export default {
         //获取用户信息
         let userInfo = ref(store.state.userInfo)  
 
-        async function outList(){
-            // eslint-disable-next-line
-            LocalStorage.clearAll();
-            await router.push("/login");
+         async  function showEchart(a){
+            queryMap.value.pageNum = a
+            await this.list()
+            this.initChart()
         }
-
         async function list(){
              const {data: res} = await proxy.$http.get("business/product/findProductList", {
                     params: this.queryMap
                 });
-                console.log(res.data.rows)
+
                 if (!res.success) {
                       console.log('获取失败');
                 } else {
-                    this.isshowList = true;
-                    this.desChart()
-                    this.total = res.data.total;
-                    this.productData = res.data.rows;
-                    this.a=[]
-
-                    var $this = this;
+                    //清空数组，要不然有脏数据
+                    this.listData=[]
+                    // 销毁旧的图表
+                    desChart()
                     res.data.rows.forEach(function(e) {
-                        $this.a.push({value:e.id,name:e.name})
+                        listData.value.push({value:e.id,name:e.name})
                     }); 
                 }    
-        }
-        function showEchart(){
-            this.isshowList = false
-            this.initChart()
-        }
-        
+        }        
         // 基础配置一下Echarts
-        function initChart() {
-            var $this = this;//this 指向问题
-            let myChart = echart.init(document.getElementById('listEchart'), 'dark');
+         function initChart() {
+            // let myChart = echart.init(document.getElementById('listEchart'), 'dark');
+            let myChart = echart.init(document.getElementById('listEchart'));
             let option = {
             tooltip: {
                 trigger: 'item'
@@ -124,7 +115,7 @@ export default {
                 labelLine: {
                     show: false
                 },
-                data: $this.a
+                data: listData.value
                 }]
             };
             option && myChart.setOption(option);
@@ -136,14 +127,28 @@ export default {
         }
         
         return{
-            total,productData,queryMap,isshowList,a,userInfo,
+            queryMap,userInfo,listData,
             
-            list,outList,showEchart,initChart,desChart
+            list,showEchart,initChart,desChart
         }
     }
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
+.contain{
+    h1{
+        display: inline;
+    }
+    .el-button{
+        float: right;
+        margin-left: 10px;
+    }
+}
+.show{
+    width:100%;
+    display: flex;
+    justify-content: center;
 
+}
 </style>

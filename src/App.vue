@@ -1,5 +1,8 @@
 <template>
+<div id="App">
   <router-view/>
+</div>
+  
 </template>
 
 <script>
@@ -17,5 +20,16 @@ export default {
 </script>
 
 <style>
+html,body{
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+  height: 100%;
+  }
+#app{
 
+  min-width: 100%;
+  height: 100%!important;
+  background-color: #a7a8bd;
+  }
 </style>

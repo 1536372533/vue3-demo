@@ -3,7 +3,7 @@ import router from './../router'
 /* eslint-disable */
 
     const axios  = Axiso.create({
-        baseURL: 'http://www.localhost:8089/'
+        baseURL: 'http://192.168.124.5:8089/'
       })
 
     //请求拦截器
