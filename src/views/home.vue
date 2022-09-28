@@ -7,6 +7,10 @@
             <span v-if="isCollapse" @click="isCollapse = !isCollapse"><img src="./../assets/svg/system_left.svg"></span>  
             <span v-else @click="isCollapse = !isCollapse"><img src="./../assets/svg/system_right.svg"></span>
           </div>
+          <div>
+            <h1 style="line-height: 8vh;">后台管理模板系统</h1>
+          </div>
+          
           <div class="text">
             <h1> 一念天堂，一念地狱</h1>
           </div>
@@ -69,6 +73,9 @@ export default {
   padding: 0px;
   box-sizing: border-box;
 }
+.common-layout{
+  background-color: #a7a8bd;
+}
 .el-menu-vertical-demo:not(.el-menu--collapse) {
     width: 200px;
     min-height: 400px;
@@ -86,11 +93,12 @@ export default {
     align-items: center;
     opacity: 1;
     &:hover{
-      background-color: white;
+      background-color: rgba(255, 255, 255, 0.5);
     }
   }
   .text{
       float: left;
+      color: white;
       position: absolute;
       left: 50%;
       top: 50%;

@@ -25,11 +25,7 @@ html,body{
   padding: 0px;
   width: 100%;
   height: 100%;
-  }
-#app{
-
-  min-width: 100%;
-  height: 100%!important;
-  background-color: #a7a8bd;
-  }
+  background: url(./assets/login_background.gif) no-repeat;
+  background-size: 100% 100%;
+}
 </style>

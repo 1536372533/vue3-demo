@@ -31,7 +31,6 @@ export default {
         
         async function usreList(){
             const {data: res} = await proxy.$http.post("system/user/login",this.userLoginForm);
-            // post请求不需要用到params
             console.log(res)
              if (res.success) {
                     console.log('登陆成功');
@@ -75,13 +74,14 @@ export default {
 #login h1{
     position: absolute;
     top: 100px;
+    white-space: nowrap;
 }
 #contain{
     width: 480px;
     height: 300px;
     position: absolute;
     top: 190px;
-    background-color: white;
+    backdrop-filter: blur(10px);
     border-radius: 20px;
     box-shadow: -4px -4px 10px rgb(39, 65, 65),
                 4px 4px 20px aqua;
@@ -105,10 +105,10 @@ export default {
     margin-left: 30px;
 }
 .login input {
-    width: 60%;
+    width: 66%;
     height: 30px;
     font-size: 25px;
-    margin-top: 10px;
+    margin-top: 15px;
     transform: translateX(10%);
     border-radius: 5px;
     border: 1px solid black;
@@ -119,19 +119,19 @@ export default {
 }
 .loginbtn,.addbtn{
     position: relative;
-    top: 150px;
-    width: 50px;
-    height: 30px;
+    top: 140px;
+    width: 100px;
+    height: 35px;
     border: 1px solid aqua;
     border-radius: 5px;
     box-shadow: -1px -1px 2px rgb(39, 65, 65),1px 1px 2px aqua;
 }
 .loginbtn{
     float: left;
-    left: 40px;
+    left: 50px;
 }
 .addbtn{
     float: right;
-    right: 40px;
+    right: 50px;
 }
 </style>

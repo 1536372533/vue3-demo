@@ -66,10 +66,10 @@
                         <el-divider>其他项目</el-divider>
 
                         <el-row :gutter="20">
-                            <el-col :span="6"><div class="grid-content bg-purple"><el-button @click="demo1()">功能1</el-button></div></el-col>
-                            <el-col :span="6"><div class="grid-content bg-purple"><el-button @click="demo(2)">功能2</el-button></div></el-col>
-                            <el-col :span="6"><div class="grid-content bg-purple"><el-button @click="demo(3)">功能3</el-button></div></el-col>
-                            <el-col :span="6"><div class="grid-content bg-purple"><el-button @click="demo(4)">功能4</el-button></div></el-col>
+                            <el-col :span="6"><div class="grid-content bg-purple" v-shake><el-button @click="demo(1)">功能1</el-button></div></el-col>
+                            <el-col :span="6"><div class="grid-content bg-purple" v-shake><el-button @click="demo(2)">功能2</el-button></div></el-col>
+                            <el-col :span="6"><div class="grid-content bg-purple" v-shake><el-button @click="demo(3)">功能3</el-button></div></el-col>
+                            <el-col :span="6"><div class="grid-content bg-purple" v-shake><el-button @click="demo(4)">功能4</el-button></div></el-col>
                         </el-row>
 
                         <el-divider></el-divider>
@@ -113,11 +113,9 @@ export default {
         const router = useRouter()
         const route = useRoute()
         const {proxy} =  getCurrentInstance()
-
         //获取用户信息
         let userInfo = ref(store.state.userInfo) 
         let tableInfo = ref([])
-        
         let img = ref([
             {url:require("./../assets/swiper/1.jpg")},
             {url:require("./../assets/swiper/2.jpg")},
@@ -125,7 +123,6 @@ export default {
             {url:require("./../assets/swiper/4.jpg")},
             {url:require("./../assets/swiper/5.jpg")},
         ])
-
         //获取用户信息tabelInfo
         async function info(){
             const {data: res} = await proxy.$http.get("system/user/info");
@@ -163,9 +160,11 @@ export default {
                 duration: delay,
             })
         }
-
-        const demo1 = throttle1(Message(1),delay)
-
+        const demo = (index) => {
+            if(index == 1){
+                const demo1 = throttle1(Message(index),delay)
+            }
+        }
         function outLogin(){
             // eslint-disable-next-line
             LocalStorage.clearAll();
@@ -173,7 +172,7 @@ export default {
         }
         return {
             userInfo,tableInfo,img,
-            outLogin,demo1,demo,
+            outLogin,demo,
             modules: [Pagination,Navigation],
         }
     },
