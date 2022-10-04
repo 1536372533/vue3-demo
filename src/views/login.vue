@@ -13,7 +13,7 @@
                     <input v-shake type="password" v-model="userLoginForm.password" placeholder="请输入密码">
                 </form>
                 <div class="remember">
-                    <input type="radio" name="" id="psd" class="radio"><label for="psd"></label> 记住密码
+                    <input type="radio" name="" id="psd" class="radio"><label for="psd"></label>记住密码
                 </div>
                 <div class="message">
                     <span v-html="error"></span>
@@ -72,7 +72,7 @@ export default {
             userLoginForm,error, 
             usreList,getUserInfo,
         }    
-    }
+    } 
 }
 </script>
 
