@@ -5,7 +5,7 @@ import 'nprogress/nprogress.css'
 /* eslint-disable */
 
     const axios  = Axiso.create({
-        baseURL: 'http://192.168.124.5:8089/'
+        baseURL: 'http://121.199.17.114:8089/'
       })
 
     //请求拦截器

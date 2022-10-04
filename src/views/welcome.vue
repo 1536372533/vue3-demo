@@ -16,7 +16,7 @@
                         <el-button style="float:right;" @click="outLogin()"  plain  type="primary">退出登陆</el-button>
                         <el-button style="float:right; margin-right: 10px;" type="primary" plain loading >获取源码</el-button>
                     </div>
-                    <hr>
+                    <el-divider></el-divider>
                     <el-tooltip class="item" effect="dark" content="帅气又多金的小伙子" placement="right-start">
                         <el-avatar :size="80" :src="require('./../assets/upload/'+ userInfo.avatar)" style="float:left; margin-left: 20px;"></el-avatar>
                     </el-tooltip>
@@ -32,12 +32,12 @@
                 <!-- 功能列表 -->
                 <el-card class="box-card" style=" margin-top:10px;" :gutter="10">
                     <el-card style="height:125px; margin: 0 20px 0 20px; --el-card-padding: 0px;" >
-                        <img  style="height: auto; max-width: 100%; background-position: center;" src="./../assets/font.png" alt="帅">
+                        <img  style="height: auto; min-width: 100%; background-position: center;" src="./../assets/font.png" alt="帅">
                     </el-card>
                 </el-card>
 
                 <el-card class="box-card" style="margin-top:20px;  padding:0px;">
-                    <div id="loginReport" style="width: 650px;height:240px;">
+                    <div id="loginReport" style="width: 650px;height:210px;">
                         <list></list>
                     </div>
                 </el-card>
@@ -73,7 +73,8 @@
                         </el-row>
 
                         <el-divider></el-divider>
-                        <el-card style="height:290px">
+                        <el-card style="height:290px;overflow: none;">
+                            {{userInfo}}
                             <demo></demo>
                         </el-card>
                     </el-card>
@@ -86,11 +87,11 @@
 <script>
 import { useStore } from 'vuex'
 import { useRoute,useRouter } from 'vue-router'
-import { ref, toRefs } from '@vue/reactivity'
+import { ref, reactive , toRefs } from '@vue/reactivity'
 import { getCurrentInstance, onMounted } from '@vue/runtime-core'
 import { ElNotification } from 'element-plus'
 import list from './../components/list.vue'
-import demo from '../components/demo/appDemo.vue'
+import demo from '../components/demo/AppDemo.vue'
 
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/vue";
@@ -135,6 +136,7 @@ export default {
                     nickname: res.data.nickname,
                     roles:    res.data.roles
                 })
+                //tableInfo是json数组类型 console.log(tableInfo.value[0].username);
             }
         }
         info()

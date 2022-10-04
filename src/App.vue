@@ -20,12 +20,6 @@ export default {
 </script>
 
 <style>
-html,body{
-  margin: 0px;
-  padding: 0px;
-  width: 100%;
-  height: 100%;
-  background: url(./assets/login_background.gif) no-repeat;
-  background-size: 100% 100%;
-}
+*{margin: 0px;padding: 0px;}
+html,body,#App{width: 100%;height: 100%;}
 </style>

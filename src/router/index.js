@@ -11,6 +11,11 @@ const routes = [
         component: () => import( './../views/login.vue'), //登陆主页面
 		name: 'Login'
 	},
+	{
+		path: '/demo',
+		component: () => import('../views/demo.vue'),
+		name: 'AppDemo'
+	},
 	{ 
 		path: '/home', 
         component: () => import( './../views/home.vue'), //主页面
@@ -24,7 +29,7 @@ const routes = [
 			},
 			{
 				path: '/welcome/demo', 
-				component: () => import( './../components/demo/appDemo.vue'), //主页面
+				component: () => import( './../components/demo/AppDemo.vue'), //主页面
 				name: 'Demo'
 			},
 		]

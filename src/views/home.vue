@@ -7,10 +7,6 @@
             <span v-if="isCollapse" @click="isCollapse = !isCollapse"><img src="./../assets/svg/system_left.svg"></span>  
             <span v-else @click="isCollapse = !isCollapse"><img src="./../assets/svg/system_right.svg"></span>
           </div>
-          <div>
-            <h1 style="line-height: 8vh;">后台管理模板系统</h1>
-          </div>
-          
           <div class="text">
             <h1> 一念天堂，一念地狱</h1>
           </div>
@@ -21,9 +17,10 @@
 
         <el-container>
           <el-aside id="aside" >
-            <el-menu default-active="2" class="el-menu-vertical-demo" :collapse="isCollapse">
+            <el-menu default-active="this.$router.path" router  
+                     class="el-menu-vertical-demo" :collapse="isCollapse" >
 
-              <el-menu-item v-for="routerURL in urlLists" :key="routerURL.url"  @click="link(routerURL.url)">
+              <el-menu-item v-for="routerURL in urlLists" :key="routerURL.url"  :index="routerURL.url">
 
                 <el-icon><img :src = routerURL.icon></el-icon>
                 <template #title>{{routerURL.name}}</template>
@@ -48,12 +45,13 @@ import { useRoute, useRouter } from 'vue-router'
 export default {
     name:"appHome",
     setup () {
-      const isCollapse = ref(false)
+      const isCollapse = ref(true)
         var urlLists = ref([
           {url:'/welcome',     icon: require('./../assets/svg/home.svg'),name:' 系统主页'},
           {url:'/welcome/demo',icon: require('./../assets/svg/demo.svg'),name:' 个人Demo'},
           ])
       const router = useRouter()  
+      const route = useRoute()
       const draw = () => {}
       const link = async(url) => {
           await router.push(url)
@@ -74,12 +72,12 @@ export default {
   box-sizing: border-box;
 }
 .common-layout{
-  background-color: #a7a8bd;
+  background-color: #2f90b9;
 }
 .el-menu-vertical-demo:not(.el-menu--collapse) {
     width: 200px;
     min-height: 400px;
-  }
+}
 #header{
   height: 8vh;
   background-color:rgba(255, 255, 255, 0.3);
@@ -93,16 +91,13 @@ export default {
     align-items: center;
     opacity: 1;
     &:hover{
-      background-color: rgba(255, 255, 255, 0.5);
+      background-color: rgba(255, 255, 255, 0.25);
     }
   }
   .text{
       float: left;
       color: white;
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%,-50%);
+      line-height: 8vh; 
     }
 }
 #aside{
@@ -112,10 +107,12 @@ export default {
     --el-menu-bg-color:rgba(255, 255, 255, 0.5);
   }
 }
-
 #main{
   width: 100%;
   height: 92vh;
-  background-color: #a7a8bd;
+  margin: 0px;
+  padding: 0px;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(5px);
 }
 </style>
