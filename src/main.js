@@ -4,7 +4,7 @@ import App from './App.vue'
 import router from './router'
 import axios from './plugs/axios'
 import store from './store'
-import directives from "./directives/index";
+import directives from "./directives/shake";
 
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import ElementUI from 'element-plus'

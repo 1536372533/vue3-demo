@@ -38,8 +38,8 @@ export default {
     name:"appLogin",
     setup(){
         let userLoginForm = reactive({
-            username:"18852150",
-            password:"123456"
+            username:" ",
+            password:" "
         })
         const store = useStore()
         const router = useRouter()
