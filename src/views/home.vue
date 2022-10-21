@@ -45,7 +45,7 @@ import { useRoute, useRouter } from 'vue-router'
 export default {
     name:"appHome",
     setup () {
-      const isCollapse = ref(true)
+      const isCollapse = ref(false)
         var urlLists = ref([
           {url:'/welcome',     icon: require('./../assets/svg/home.svg'),name:' 系统主页'},
           {url:'/welcome/demo',icon: require('./../assets/svg/demo.svg'),name:' 个人Demo'},

@@ -4,9 +4,9 @@ import App from './App.vue'
 import router from './router'
 import axios from './plugs/axios'
 import store from './store'
-import directives from "./directives/shake";
+import directives from "./directives/shake"
+import mitt from 'mitt'
 
-import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import ElementUI from 'element-plus'
 import 'element-plus/dist/index.css'
 
@@ -17,6 +17,8 @@ directives(app)
 let BASE_API_URL="http://121.199.17.114:8089/"//服务器ip地址
 app.config.globalProperties.$http = axios
 app.config.globalProperties.BASE_API_URL=BASE_API_URL
+// vue3的全局总线
+app.config.globalProperties.bus = new mitt()
 
 app.use(router).use(store).use(ElementUI).mount('#app')
 

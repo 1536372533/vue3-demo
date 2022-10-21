@@ -73,10 +73,9 @@
                         </el-row>
 
                         <el-divider></el-divider>
-                        <el-card style="height:290px;overflow: none;">
-                            {{userInfo}}
-                            <demo></demo>
-                        </el-card>
+
+                        <demo style="height: 100%; width: 100%;"></demo>
+                        
                     </el-card>
                 </div>
             </el-col>
@@ -87,7 +86,7 @@
 <script>
 import { useStore } from 'vuex'
 import { useRoute,useRouter } from 'vue-router'
-import { ref, reactive , toRefs } from '@vue/reactivity'
+import { ref } from '@vue/reactivity'
 import { getCurrentInstance, onMounted } from '@vue/runtime-core'
 import { ElNotification } from 'element-plus'
 import list from './../components/list.vue'
@@ -117,6 +116,7 @@ export default {
         //获取用户信息
         let userInfo = ref(store.state.userInfo) 
         let tableInfo = ref([])
+        let demoShow = ref(false)
         let img = ref([
             {url:require("./../assets/swiper/1.jpg")},
             {url:require("./../assets/swiper/2.jpg")},
@@ -140,40 +140,18 @@ export default {
             }
         }
         info()
-        const delay = 3000
-        
-        function throttle1(func, wait) {
-            var previous = 0;
-            return function () {
-                var now = Date.now();
-                var context = this;
-                var args = arguments;
-                if (now - previous > wait) {
-                    func.apply(context, args);
-                    previous = now;
-                }
-            }
-        }
-        function Message(index){
-            ElNotification({
-                title: 'Title',
-                message: 'Demo'+index,
-                type: 'success',
-                duration: delay,
-            })
-        }
         const demo = (index) => {
-            if(index == 1){
-                const demo1 = throttle1(Message(index),delay)
-            }
+            demoShow.value = true
+            proxy.bus.emit('hello',index)
         }
+
         function outLogin(){
             // eslint-disable-next-line
             LocalStorage.clearAll();
             router.push("/login");
         }
         return {
-            userInfo,tableInfo,img,
+            userInfo,tableInfo,img,demoShow,
             outLogin,demo,
             modules: [Pagination,Navigation],
         }

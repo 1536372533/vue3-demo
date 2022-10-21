@@ -11,11 +11,6 @@ const routes = [
         component: () => import( './../views/login.vue'), //登陆主页面
 		name: 'Login'
 	},
-	{
-		path: '/demo',
-		component: () => import('../views/demo.vue'),
-		name: 'AppDemo'
-	},
 	{ 
 		path: '/home', 
         component: () => import( './../views/home.vue'), //主页面

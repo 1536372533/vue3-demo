@@ -1,5 +1,6 @@
 <template>
 <div id="login">
+    <div id="border"></div>
     <div id="contain">
         <div id="left_card">
             <h1>欢迎来到我的Vue3大世界</h1>
@@ -12,8 +13,8 @@
                     <input v-shake type="text" v-model="userLoginForm.username" placeholder="请输入账号">
                     <input v-shake type="password" v-model="userLoginForm.password" placeholder="请输入密码">
                 </form>
-                <div class="remember">
-                    <input type="radio" name="" id="psd" class="radio"><label for="psd"></label>记住密码
+                <div class="recover">
+                    <p @click="recover">忘记密码</p>
                 </div>
                 <div class="message">
                     <span v-html="error"></span>
@@ -32,14 +33,14 @@
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import { getCurrentInstance, reactive , ref  } from '@vue/runtime-core'
-
+import { ElMessage } from 'element-plus'
 
 export default {
-    name:"appLogin",
+    name:"appLogin",    
     setup(){
         let userLoginForm = reactive({
-            username:" ",
-            password:" "
+            username:"",
+            password:""
         })
         const store = useStore()
         const router = useRouter()
@@ -48,6 +49,7 @@ export default {
         async function usreList(){
             const {data: res} = await proxy.$http.post("system/user/login",this.userLoginForm);
             console.log(res)
+            error.value = ''
              if (res.success) {
                     // eslint-disable-next-line
                     LocalStorage.set(LOCAL_KEY_XINGUAN_ACCESS_TOKEN, res.data);
@@ -68,9 +70,16 @@ export default {
                     await router.push("/home");
                 }
         }
+        const recover = () => {
+            ElMessage({
+                showClose: true,
+                message: '密码都记不住，干什么吃的！',
+                type: 'success',
+            })
+        }
         return {
             userLoginForm,error, 
-            usreList,getUserInfo,
+            usreList,getUserInfo,recover,
         }    
     } 
 }
@@ -85,6 +94,15 @@ export default {
         filter: hue-rotate(360deg);
     }
 }
+.contain{
+    height: 400px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);   
+    border: 1px solid black;
+    border-radius: 25px; 
+}
 #login{
     position: relative;
     width: 100vw;
@@ -92,20 +110,19 @@ export default {
     background-image: url(./../assets/login_background.gif);
     background-size: 100% 100%;
     background-color:  #a7a8bd;
-    #contain{
-        height: 400px;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%,-50%);
-        border-radius: 25px;
-        border: 1px solid black;
-        background-color: rgba(255, 255, 255, 0.1) !important;
-        backdrop-filter: blur(5px);
-        box-shadow: -5px -5px 10px rgb(39, 65, 65),
-                     5px 5px 20px aqua;
+
+    #border{
+        .contain();
+        width: 900px;
+        box-shadow: -5px -5px 12px rgb(39, 65, 65),
+                        5px 5px 22px aqua;
         /* 5秒 infinite循环播放无限次 linear匀速  */
         animation: animate 5s linear infinite;
+    }
+    #contain{
+        .contain();
+        background-color: rgba(255, 255, 255, 0.1) !important;
+        backdrop-filter: blur(5px);
     }
 }
 #contain{
@@ -155,46 +172,16 @@ export default {
             outline: none;
         }
     }
-    .remember{
+    .recover{
         float: right;
-        height: 26px;
-        text-align: center;
-        font-size: 1rem;
-        position: relative;
-        .radio{
-            height: 1rem;
-            width: 1rem;
-            vertical-align:middle;
-            margin-top: -2px;
-            opacity: 0;
-        }
-        label {
-            position: absolute;
-            left: -2px;
-            top: 5px;
-            height: 1rem;
-            width: 1rem;
-            vertical-align:middle;
-            margin-top: -2px;
-            border-radius: 50%;
-            border: 1px solid black;
-        }
-        //radio选中后修改labe内的内容 :after 选择器在被选元素的内容后面插入内容。
-        input:checked + label::after {
-            content: "";
-            width: 0.6rem;
-            height: 0.6rem;
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%,-50%);
-            border-radius: 50%;
-            background-color: rgba(207, 38, 38, 0.8);  
-            border: 1px solid rgba(207, 38, 38, 0.8);
-        }
+        margin-top: 5px;
+        color: #4e6ef2;
+        cursor: pointer;
     }
     .message{
-        margin-top: 26px;
+        float: left;
+        margin-top: 5px;
+        margin-left: 20px;
         font-size: 0.9rem;
         color: red;
     }
@@ -203,7 +190,9 @@ export default {
         height: 35px;
         margin-top: 10px;
         border-radius: 10px;
-        background-color: rgba(207, 38, 38, 0.8);    
+        background-color: rgba(207, 38, 38, 0.8);   
+        /* 5秒 infinite循环播放无限次 linear匀速  */
+        animation: animate 5s linear infinite;
     } 
     
 }
